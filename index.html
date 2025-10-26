@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draft - Learn Smart. Study Bright.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100%;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(123, 97, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(90, 215, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+            animation: backgroundPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100%;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(226, 232, 240, 0.5);
+            padding: 2rem 0;
+            position: fixed;
+            height: 100%;
+            z-index: 100;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            padding: 0 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo p {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 0.25rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0 1rem;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #64748b;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: rgba(123, 97, 255, 0.1);
+            color: #7b61ff;
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, rgba(123, 97, 255, 0.15), rgba(90, 215, 255, 0.15));
+            color: #7b61ff;
+            box-shadow: 0 4px 12px rgba(123, 97, 255, 0.2);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .top-bar-left h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .streak-counter {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .user-profile {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-profile:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(123, 97, 255, 0.4);
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dashboard */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .hero .gradient-text {
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(123, 97, 255, 0.2);
+        }
+
+        .feature-card:hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(123, 97, 255, 0.05), rgba(90, 215, 255, 0.05));
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-btn {
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .feature-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(123, 97, 255, 0.4);
+        }
+
+        /* Subject Cards */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .subject-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .subject-card.math { border-left: 4px solid #3b82f6; }
+        .subject-card.science { border-left: 4px solid #10b981; }
+        .subject-card.english { border-left: 4px solid #f59e0b; }
+        .subject-card.filipino { border-left: 4px solid #ef4444; }
+        .subject-card.ap { border-left: 4px solid #8b5cf6; }
+        .subject-card.mapeh { border-left: 4px solid #f97316; }
+        .subject-card.esp { border-left: 4px solid #06b6d4; }
+        .subject-card.ict { border-left: 4px solid #84cc16; }
+
+        .subject-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .subject-card p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Flashcards */
+        .flashcard-creator {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #7b61ff;
+            box-shadow: 0 0 0 3px rgba(123, 97, 255, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(123, 97, 255, 0.4);
+        }
+
+        .flashcards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .flashcard {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flashcard:hover {
+            transform: rotateY(5deg) translateY(-4px);
+            box-shadow: 0 12px 30px rgba(123, 97, 255, 0.2);
+        }
+
+        .flashcard.flipped {
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            color: white;
+        }
+
+        .flashcard-content {
+            padding: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+
+        .quiz-progress {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .quiz-progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .quiz-question {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: #1e293b;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+        }
+
+        .quiz-option:hover {
+            border-color: #7b61ff;
+            background: rgba(123, 97, 255, 0.05);
+        }
+
+        .quiz-option.selected {
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            color: white;
+            border-color: #7b61ff;
+        }
+
+        .quiz-option.correct {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .quiz-option.incorrect {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        /* Login */
+        .login-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .login-left {
+            flex: 1;
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .login-left h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .login-left p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .login-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: #f8fafc;
+        }
+
+        .login-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1e293b;
+        }
+
+        .guest-btn {
+            background: transparent;
+            color: #7b61ff;
+            border: 2px solid #7b61ff;
+            margin-top: 1rem;
+        }
+
+        .guest-btn:hover {
+            background: #7b61ff;
+            color: white;
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(123, 97, 255, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(123, 97, 255, 0.6);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Welcome Modal */
+        .welcome-modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .welcome-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            position: relative;
+            animation: welcomeSlideIn 0.6s ease-out;
+        }
+
+        @keyframes welcomeSlideIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-50px) scale(0.9); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        .welcome-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .welcome-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+
+        .welcome-content p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .welcome-content .highlight {
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .welcome-btn {
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        .welcome-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(123, 97, 255, 0.4);
+        }
+
+        .close-modal {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #1e293b;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .subjects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .login-container {
+                flex-direction: column;
+            }
+
+            .login-left,
+            .login-right {
+                flex: none;
+            }
+
+            .login-left {
+                min-height: 40vh;
+            }
+
+            .welcome-content {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .welcome-content h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Modal -->
+    <div id="welcomeModal" class="welcome-modal">
+        <div class="welcome-content">
+            <h2>Welcome to EduVerse8! ✨</h2>
+            <p>Welcome to <span class="highlight">EduVerse8</span>, an innovative educational platform designed to make learning engaging, interactive, and accessible for all students.</p>
+            <p>This website serves as the <span class="highlight">official research output of Alaiza Abalos et al. (2025)</span>, proudly developed by <span class="highlight">Hezron Sison</span>.</p>
+            <p><span class="highlight">EduVerse8</span> was built to help learners review lessons from all eight major subjects, create personalized flashcards, and test their knowledge through random quizzes — all in one modern, easy-to-use platform.</p>
+            <p>Start exploring, discover your strengths, and enjoy a smarter way to study with EduVerse8! ✨</p>
+            <button class="welcome-btn" onclick="closeWelcomeModal()">Let's Get Started!</button>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo">
+                <h1>Draft</h1>
+                <p>Learn Smart. Study Bright.</p>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" onclick="showPage('dashboard')">
+                        <span class="nav-icon">🏠</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="showPage('reviewers')">
+                        <span class="nav-icon">📚</span>
+                        <span>Reviewers</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="showPage('flashcards')">
+                        <span class="nav-icon">🧠</span>
+                        <span>Flashcards</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="showPage('quiz')">
+                        <span class="nav-icon">🎯</span>
+                        <span>Random Quiz</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="showPage('profile')">
+                        <span class="nav-icon">👤</span>
+                        <span>Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <h2 id="pageTitle">Dashboard</h2>
+                </div>
+                <div class="top-bar-right">
+                    <div class="streak-counter">
+                        <span>🔥</span>
+                        <span id="streakCount">0</span>
+                        <span>day streak</span>
+                    </div>
+                    <div class="user-profile" onclick="showPage('profile')" id="userProfile">
+                        G
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="content">
+                <!-- Dashboard Page -->
+                <div id="dashboard" class="page active">
+                    <div class="hero">
+                        <h1>Learn Smart. <span class="gradient-text">Study Bright.</span></h1>
+                        <p>Master every subject — anytime, anywhere. Explore EduVerse8.</p>
+                    </div>
+
+                    <div class="feature-grid">
+                        <div class="feature-card" onclick="showPage('reviewers')">
+                            <span class="feature-icon">📚</span>
+                            <h3>Reviewers</h3>
+                            <p>Comprehensive study materials for all 8 subjects with detailed topics and explanations.</p>
+                            <button class="feature-btn">Start Learning</button>
+                        </div>
+
+                        <div class="feature-card" onclick="showPage('flashcards')">
+                            <span class="feature-icon">🧠</span>
+                            <h3>Flashcards</h3>
+                            <p>Create custom flashcard decks and master any topic with spaced repetition learning.</p>
+                            <button class="feature-btn">Create Deck</button>
+                        </div>
+
+                        <div class="feature-card" onclick="showPage('quiz')">
+                            <span class="feature-icon">🎯</span>
+                            <h3>Random Quiz</h3>
+                            <p>Test your knowledge with randomized questions from all subjects and track your progress.</p>
+                            <button class="feature-btn">Take Quiz</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviewers Page -->
+                <div id="reviewers" class="page">
+                    <div class="hero">
+                        <h1>Subject <span class="gradient-text">Reviewers</span></h1>
+                        <p>Choose a subject to access comprehensive study materials and topics.</p>
+                    </div>
+
+                    <div class="subjects-grid">
+                        <div class="subject-card english" onclick="openSubjectModal('English')">
+                            <h3>📖 English</h3>
+                            <p>Grammar, Literature, Writing</p>
+                        </div>
+                        <div class="subject-card math" onclick="openSubjectModal('Mathematics')">
+                            <h3>🔢 Mathematics</h3>
+                            <p>Algebra, Geometry, Statistics</p>
+                        </div>
+                        <div class="subject-card science" onclick="openSubjectModal('Science')">
+                            <h3>🔬 Science</h3>
+                            <p>Biology, Chemistry, Physics</p>
+                        </div>
+                        <div class="subject-card filipino" onclick="openSubjectModal('Filipino')">
+                            <h3>🇵🇭 Filipino</h3>
+                            <p>Gramatika, Panitikan, Pagbasa</p>
+                        </div>
+                        <div class="subject-card ap" onclick="openSubjectModal('Araling Panlipunan')">
+                            <h3>🌏 Araling Panlipunan</h3>
+                            <p>History, Geography, Civics</p>
+                        </div>
+                        <div class="subject-card mapeh" onclick="openSubjectModal('MAPEH')">
+                            <h3>🎨 MAPEH</h3>
+                            <p>Music, Arts, PE, Health</p>
+                        </div>
+                        <div class="subject-card esp" onclick="openSubjectModal('ESP')">
+                            <h3>💝 ESP</h3>
+                            <p>Values, Ethics, Character</p>
+                        </div>
+                        <div class="subject-card ict" onclick="openSubjectModal('ICT/TLE')">
+                            <h3>💻 ICT / TLE</h3>
+                            <p>Technology, Skills, Computing</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flashcards Page -->
+                <div id="flashcards" class="page">
+                    <div class="hero">
+                        <h1>Smart <span class="gradient-text">Flashcards</span></h1>
+                        <p>Create and study your own flashcard decks for effective learning.</p>
+                    </div>
+
+                    <div class="flashcard-creator">
+                        <h3>Create New Flashcard</h3>
+                        <div class="input-group">
+                            <label for="question">Question:</label>
+                            <textarea id="question" rows="3" placeholder="Enter your question here..."></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="answer">Answer:</label>
+                            <textarea id="answer" rows="3" placeholder="Enter the answer here..."></textarea>
+                        </div>
+                        <button class="btn" onclick="createFlashcard()">Add Flashcard</button>
+                    </div>
+
+                    <div id="flashcardsContainer" class="flashcards-container">
+                        <!-- Flashcards will be added here -->
+                    </div>
+                </div>
+
+                <!-- Quiz Page -->
+                <div id="quiz" class="page">
+                    <div class="hero">
+                        <h1>Random <span class="gradient-text">Quiz</span></h1>
+                        <p>Test your knowledge with interactive questions from all subjects.</p>
+                    </div>
+
+                    <div class="quiz-container">
+                        <div id="quizContent">
+                            <button class="btn" onclick="startQuiz()">Start Quiz</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Page -->
+                <div id="profile" class="page">
+                    <div class="hero">
+                        <h1>Your <span class="gradient-text">Profile</span></h1>
+                        <p>Manage your account and track your learning progress.</p>
+                    </div>
+
+                    <div class="login-form" style="max-width: 500px; margin: 0 auto;">
+                        <h2 id="profileTitle">Welcome to EduVerse8</h2>
+                        <div class="input-group">
+                            <label for="username">Enter your name:</label>
+                            <input type="text" id="username" placeholder="Your name">
+                        </div>
+                        <button class="btn" onclick="login()">Save Profile</button>
+                        <button class="btn guest-btn" onclick="continueAsGuest()">Continue as Guest</button>
+                        <button class="btn" onclick="logout()" id="logoutBtn" style="display: none; margin-top: 1rem; background: #ef4444;">Logout</button>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Custom Footer -->
+            <footer style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-top: 1px solid rgba(226, 232, 240, 0.5); padding: 1.5rem 2rem; text-align: center; color: #64748b; font-size: 0.9rem; margin-top: auto;">
+                © 2025 EduVerse8 | Research output by Alaiza Abalos et al. | Developed by Hezron Sison
+            </footer>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab" onclick="showPage('quiz'); setTimeout(() => startQuiz(), 100)">
+        ⚡
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modalBody">
+                <!-- Modal content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUser = localStorage.getItem('eduverse_user') || null;
+        let flashcards = JSON.parse(localStorage.getItem('eduverse_flashcards')) || [];
+        let streak = parseInt(localStorage.getItem('eduverse_streak')) || 0;
+        let lastActivity = localStorage.getItem('eduverse_last_activity') || null;
+        let currentQuiz = [];
+        let currentQuestionIndex = 0;
+        let quizScore = 0;
+        let selectedAnswer = null;
+        let welcomeShown = localStorage.getItem('eduverse_welcome_shown') || false;
+
+        // Sample quiz questions
+        const quizQuestions = [
+            {
+                question: "What is the capital of the Philippines?",
+                options: ["Manila", "Cebu", "Davao", "Quezon City"],
+                correct: 0
+            },
+            {
+                question: "What is 15 + 27?",
+                options: ["42", "41", "43", "40"],
+                correct: 0
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                options: ["Venus", "Mars", "Jupiter", "Saturn"],
+                correct: 1
+            },
+            {
+                question: "Who wrote 'Noli Me Tangere'?",
+                options: ["Andres Bonifacio", "Jose Rizal", "Emilio Aguinaldo", "Apolinario Mabini"],
+                correct: 1
+            },
+            {
+                question: "What is the largest ocean on Earth?",
+                options: ["Atlantic", "Indian", "Arctic", "Pacific"],
+                correct: 3
+            },
+            {
+                question: "What is the formula for the area of a circle?",
+                options: ["πr²", "2πr", "πd", "r²"],
+                correct: 0
+            },
+            {
+                question: "What is the powerhouse of the cell?",
+                options: ["Nucleus", "Mitochondria", "Ribosome", "Cytoplasm"],
+                correct: 1
+            },
+            {
+                question: "Who is the national hero of the Philippines?",
+                options: ["Andres Bonifacio", "Jose Rizal", "Lapu-Lapu", "Emilio Aguinaldo"],
+                correct: 1
+            }
+        ];
+
+        // Subject reviewers data
+        const subjectReviewers = {
+            'English': [
+                'Parts of Speech: Nouns, Verbs, Adjectives, Adverbs',
+                'Sentence Structure: Subject, Predicate, Clauses',
+                'Literary Devices: Metaphor, Simile, Personification',
+                'Reading Comprehension Strategies',
+                'Essay Writing: Introduction, Body, Conclusion',
+                'Grammar Rules: Tenses, Agreement, Punctuation',
+                'Vocabulary Building and Word Formation',
+                'Poetry Analysis and Interpretation'
+            ],
+            'Mathematics': [
+                'Basic Operations: Addition, Subtraction, Multiplication, Division',
+                'Fractions and Decimals: Converting and Operations',
+                'Geometry: Shapes, Area, Perimeter, Volume',
+                'Algebra: Variables, Equations, Inequalities',
+                'Statistics: Mean, Median, Mode, Range',
+                'Probability: Basic Concepts and Calculations',
+                'Number Theory: Prime Numbers, Factors',
+                'Problem Solving Strategies and Techniques'
+            ],
+            'Science': [
+                'Scientific Method: Hypothesis, Experiment, Conclusion',
+                'States of Matter: Solid, Liquid, Gas, Plasma',
+                'Human Body Systems: Circulatory, Respiratory, Digestive',
+                'Plants and Photosynthesis: Process and Importance',
+                'Forces and Motion: Newton\'s Laws',
+                'Chemistry: Elements, Compounds, Reactions',
+                'Earth Science: Weather, Climate, Geology',
+                'Ecology: Ecosystems, Food Chains, Conservation'
+            ],
+            'Filipino': [
+                'Mga Bahagi ng Pananalita: Pangngalan, Pandiwa, Pang-uri',
+                'Pagbuo ng Pangungusap: Simuno, Panaguri',
+                'Mga Akdang Pampanitikan: Tula, Maikling Kwento',
+                'Pag-unawa sa Binasa: Estratehiya at Teknik',
+                'Pagsulat ng Sanaysay: Panimula, Katawan, Wakas',
+                'Gramatika: Pokus, Aspekto, Modalidad',
+                'Retorika: Mga Pamamaraan ng Pakikipagtalastasan',
+                'Kultura at Tradisyon sa Panitikan'
+            ],
+            'Araling Panlipunan': [
+                'Kasaysayan ng Pilipinas: Sinaunang Panahon hanggang Kasalukuyan',
+                'Heograpiya at Klima: Lokasyon, Anyong Lupa at Tubig',
+                'Pamahalaan at Demokrasya: Mga Sangay ng Gobyerno',
+                'Ekonomiya at Kabuhayan: Mga Likas na Yaman',
+                'Kultura at Tradisyon: Mga Etniko at Relihiyon',
+                'Mga Bayani at Makasaysayang Pangyayari',
+                'Mga Bansa sa Asya: Kultura at Ekonomiya',
+                'Pandaigdigang Pakikipag-ugnayan'
+            ],
+            'MAPEH': [
+                'Music: Notes, Rhythm, Melody, Harmony',
+                'Arts: Elements of Art, Color Theory, Drawing Techniques',
+                'Physical Education: Sports, Fitness, Health Benefits',
+                'Health: Nutrition, Hygiene, Safety, First Aid',
+                'Filipino Folk Songs and Dances',
+                'Visual Arts: Painting, Sculpture, Crafts',
+                'Physical Fitness: Exercises and Activities',
+                'Mental Health and Wellness'
+            ],
+            'ESP': [
+                'Mga Pagpapahalaga sa Sarili: Dignidad at Respeto',
+                'Pakikipagkapwa at Pakikipagkaibigan',
+                'Pamilya at Tahanan: Mga Tungkulin at Responsibilidad',
+                'Paaralan at Pamayanan: Pakikilahok at Serbisyo',
+                'Kalikasan at Kapaligiran: Pag-aalaga at Konserbasyon',
+                'Mga Birtud at Mabubuting Gawi',
+                'Pagmamahal sa Bayan at Nasyonalismo',
+                'Kapayapaan at Pagkakaisa'
+            ],
+            'ICT/TLE': [
+                'Computer Basics: Hardware, Software, Operating Systems',
+                'Internet Safety and Digital Citizenship',
+                'Basic Programming Concepts: Logic and Algorithms',
+                'Entrepreneurship Skills: Business Planning',
+                'Technology in Daily Life: Applications and Benefits',
+                'Digital Literacy: Research and Communication',
+                'Technical Skills: Troubleshooting and Maintenance',
+                'Innovation and Creativity in Technology'
+            ]
+        };
+
+        // Initialize app
+        function init() {
+            updateUserProfile();
+            loadFlashcards();
+            updateStreak();
+            checkDailyActivity();
+            
+            // Show welcome modal if first visit
+            if (!welcomeShown) {
+                document.getElementById('welcomeModal').style.display = 'flex';
+            } else {
+                document.getElementById('welcomeModal').style.display = 'none';
+            }
+        }
+
+        // Welcome modal functions
+        function closeWelcomeModal() {
+            document.getElementById('welcomeModal').style.display = 'none';
+            localStorage.setItem('eduverse_welcome_shown', 'true');
+            welcomeShown = true;
+        }
+
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Find and activate corresponding nav link
+            const activeLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard',
+                'reviewers': 'Subject Reviewers',
+                'flashcards': 'Smart Flashcards',
+                'quiz': 'Random Quiz',
+                'profile': 'Your Profile'
+            };
+            document.getElementById('pageTitle').textContent = titles[pageId] || 'EduVerse8';
+        }
+
+        // User profile management
+        function updateUserProfile() {
+            const userProfile = document.getElementById('userProfile');
+            const profileTitle = document.getElementById('profileTitle');
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            if (currentUser) {
+                userProfile.textContent = currentUser.charAt(0).toUpperCase();
+                profileTitle.textContent = `Welcome back, ${currentUser}!`;
+                logoutBtn.style.display = 'block';
+                document.getElementById('username').value = currentUser;
+            } else {
+                userProfile.textContent = 'G';
+                profileTitle.textContent = 'Welcome to EduVerse8';
+                logoutBtn.style.display = 'none';
+            }
+        }
+
+        function login() {
+            const username = document.getElementById('username').value.trim();
+            if (username) {
+                currentUser = username;
+                localStorage.setItem('eduverse_user', username);
+                updateUserProfile();
+                showPage('dashboard');
+            }
+        }
+
+        function continueAsGuest() {
+            currentUser = 'Guest';
+            updateUserProfile();
+            showPage('dashboard');
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('eduverse_user');
+            updateUserProfile();
+            document.getElementById('username').value = '';
+        }
+
+        // Streak management
+        function updateStreak() {
+            document.getElementById('streakCount').textContent = streak;
+        }
+
+        function checkDailyActivity() {
+            const today = new Date().toDateString();
+            const lastActivityDate = lastActivity ? new Date(lastActivity).toDateString() : null;
+            
+            if (lastActivityDate !== today) {
+                // Reset streak if more than one day has passed
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                
+                if (lastActivityDate !== yesterday.toDateString() && lastActivity) {
+                    streak = 0;
+                }
+            }
+        }
+
+        function incrementStreak() {
+            const today = new Date().toDateString();
+            const lastActivityDate = lastActivity ? new Date(lastActivity).toDateString() : null;
+            
+            if (lastActivityDate !== today) {
+                streak++;
+                localStorage.setItem('eduverse_streak', streak.toString());
+                localStorage.setItem('eduverse_last_activity', new Date().toISOString());
+                updateStreak();
+            }
+        }
+
+        // Subject modal
+        function openSubjectModal(subject) {
+            const topics = subjectReviewers[subject];
+            let modalContent = `
+                <h2>${subject} Reviewers</h2>
+                <div style="text-align: left; margin-top: 1.5rem;">
+            `;
+            
+            topics.forEach(topic => {
+                modalContent += `<div style="background: linear-gradient(135deg, rgba(123, 97, 255, 0.1), rgba(90, 215, 255, 0.1)); padding: 1rem; margin: 0.5rem 0; border-radius: 12px; border-left: 4px solid #7b61ff;">
+                    <strong>${topic}</strong>
+                </div>`;
+            });
+            
+            modalContent += `</div>`;
+            
+            document.getElementById('modalBody').innerHTML = modalContent;
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Flashcards functionality
+        function createFlashcard() {
+            const question = document.getElementById('question').value.trim();
+            const answer = document.getElementById('answer').value.trim();
+            
+            if (question && answer) {
+                const flashcard = {
+                    id: Date.now(),
+                    question: question,
+                    answer: answer
+                };
+                
+                flashcards.push(flashcard);
+                localStorage.setItem('eduverse_flashcards', JSON.stringify(flashcards));
+                
+                document.getElementById('question').value = '';
+                document.getElementById('answer').value = '';
+                
+                loadFlashcards();
+                incrementStreak();
+            }
+        }
+
+        function loadFlashcards() {
+            const container = document.getElementById('flashcardsContainer');
+            
+            if (flashcards.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #64748b; font-style: italic; grid-column: 1 / -1;">No flashcards yet. Create your first one above!</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            flashcards.forEach(flashcard => {
+                const flashcardElement = document.createElement('div');
+                flashcardElement.className = 'flashcard';
+                flashcardElement.innerHTML = `
+                    <div class="flashcard-content">
+                        <div class="question">${flashcard.question}</div>
+                        <div class="answer" style="display: none;">${flashcard.answer}</div>
+                    </div>
+                `;
+                
+                flashcardElement.onclick = () => flipFlashcard(flashcardElement);
+                container.appendChild(flashcardElement);
+            });
+        }
+
+        function flipFlashcard(element) {
+            const question = element.querySelector('.question');
+            const answer = element.querySelector('.answer');
+            
+            if (element.classList.contains('flipped')) {
+                element.classList.remove('flipped');
+                question.style.display = 'block';
+                answer.style.display = 'none';
+            } else {
+                element.classList.add('flipped');
+                question.style.display = 'none';
+                answer.style.display = 'block';
+            }
+        }
+
+        // Quiz functionality
+        function startQuiz() {
+            currentQuiz = [...quizQuestions].sort(() => Math.random() - 0.5).slice(0, 5);
+            currentQuestionIndex = 0;
+            quizScore = 0;
+            selectedAnswer = null;
+            showQuestion();
+            incrementStreak();
+        }
+
+        function showQuestion() {
+            const question = currentQuiz[currentQuestionIndex];
+            const quizContent = document.getElementById('quizContent');
+            const progress = ((currentQuestionIndex) / currentQuiz.length) * 100;
+            
+            quizContent.innerHTML = `
+                <div class="quiz-progress">
+                    <div class="quiz-progress-bar" style="width: ${progress}%"></div>
+                </div>
+                <div class="quiz-question">
+                    Question ${currentQuestionIndex + 1} of ${currentQuiz.length}
+                </div>
+                <div class="quiz-question">${question.question}</div>
+                <div class="quiz-options">
+                    ${question.options.map((option, index) => 
+                        `<div class="quiz-option" onclick="selectAnswer(${index})">${option}</div>`
+                    ).join('')}
+                </div>
+                <button class="btn" onclick="submitAnswer()" style="display: none;" id="submitBtn">Submit Answer</button>
+            `;
+        }
+
+        function selectAnswer(index) {
+            selectedAnswer = index;
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach((option, i) => {
+                option.classList.remove('selected');
+                if (i === index) {
+                    option.classList.add('selected');
+                }
+            });
+            document.getElementById('submitBtn').style.display = 'inline-block';
+        }
+
+        function submitAnswer() {
+            if (selectedAnswer === null) return;
+            
+            const question = currentQuiz[currentQuestionIndex];
+            const options = document.querySelectorAll('.quiz-option');
+            
+            options.forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedAnswer && index !== question.correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            if (selectedAnswer === question.correct) {
+                quizScore++;
+            }
+            
+            setTimeout(() => {
+                currentQuestionIndex++;
+                selectedAnswer = null;
+                
+                if (currentQuestionIndex < currentQuiz.length) {
+                    showQuestion();
+                } else {
+                    showQuizResults();
+                }
+            }, 2000);
+        }
+
+        function showQuizResults() {
+            const percentage = Math.round((quizScore / currentQuiz.length) * 100);
+            const quizContent = document.getElementById('quizContent');
+            
+            let resultMessage = '';
+            let resultColor = '';
+            
+            if (percentage >= 80) {
+                resultMessage = 'Excellent! 🎉';
+                resultColor = '#10b981';
+            } else if (percentage >= 60) {
+                resultMessage = 'Good job! 👍';
+                resultColor = '#f59e0b';
+            } else {
+                resultMessage = 'Keep practicing! 💪';
+                resultColor = '#ef4444';
+            }
+            
+            quizContent.innerHTML = `
+                <div class="quiz-progress">
+                    <div class="quiz-progress-bar" style="width: 100%"></div>
+                </div>
+                <h3 style="color: ${resultColor}; margin-bottom: 1rem;">${resultMessage}</h3>
+                <div style="font-size: 3rem; margin: 2rem 0; background: linear-gradient(135deg, #7b61ff, #5ad7ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    ${quizScore} / ${currentQuiz.length}
+                </div>
+                <div style="font-size: 1.4rem; margin-bottom: 2rem; color: #1e293b;">
+                    You scored ${percentage}%
+                </div>
+                <button class="btn" onclick="startQuiz()">Take Another Quiz</button>
+            `;
+        }
+
+        // Initialize app when page loads
+        init();
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            const welcomeModal = document.getElementById('welcomeModal');
+            
+            if (event.target === modal) {
+                closeModal();
+            }
+            
+            if (event.target === welcomeModal) {
+                closeWelcomeModal();
+            }
+        }
+
+        // Mobile menu toggle (for responsive design)
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99461ffc457e02d6',t:'MTc2MTQ0MTU2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
