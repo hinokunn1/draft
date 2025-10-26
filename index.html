@@ -761,11 +761,60 @@
             color: #1e293b;
         }
 
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 200;
+            background: linear-gradient(135deg, #7b61ff, #5ad7ff);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(123, 97, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(123, 97, 255, 0.4);
+        }
+
+        /* Mobile Overlay */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 150;
+        }
+
+        .mobile-overlay.active {
+            display: block;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
             .sidebar {
                 transform: translateX(-100%);
                 transition: transform 0.3s ease;
+                z-index: 200;
+                width: 280px;
             }
 
             .sidebar.open {
@@ -776,16 +825,108 @@
                 margin-left: 0;
             }
 
+            .top-bar {
+                padding: 1rem;
+                padding-left: 4rem;
+            }
+
+            .top-bar-left h2 {
+                font-size: 1.2rem;
+            }
+
+            .top-bar-right {
+                gap: 1rem;
+            }
+
+            .streak-counter {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .user-profile {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+
             .hero h1 {
                 font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
             }
 
             .feature-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin: 2rem 0;
+            }
+
+            .feature-card {
+                padding: 2rem;
+            }
+
+            .feature-icon {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.3rem;
             }
 
             .subjects-grid {
                 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+
+            .subject-card {
+                padding: 1.5rem;
+            }
+
+            .flashcard-creator {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .flashcards-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .flashcard {
+                min-height: 150px;
+            }
+
+            .flashcard-content {
+                padding: 1.5rem;
+                font-size: 1rem;
+            }
+
+            .quiz-container {
+                padding: 2rem 1.5rem;
+                margin: 0 0.5rem;
+            }
+
+            .quiz-question {
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .quiz-options {
+                gap: 0.8rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .quiz-option {
+                padding: 0.8rem;
+                font-size: 0.9rem;
             }
 
             .login-container {
@@ -799,15 +940,101 @@
 
             .login-left {
                 min-height: 40vh;
+                padding: 1.5rem;
+            }
+
+            .login-left h1 {
+                font-size: 2rem;
+            }
+
+            .login-form {
+                padding: 2rem;
+                margin: 1rem;
             }
 
             .welcome-content {
                 padding: 2rem;
                 margin: 1rem;
+                max-width: 90%;
             }
 
             .welcome-content h2 {
                 font-size: 1.5rem;
+            }
+
+            .welcome-content p {
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+                max-width: 90%;
+            }
+
+            .fab {
+                bottom: 1rem;
+                right: 1rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .input-group input,
+            .input-group textarea {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            /* Footer adjustments for mobile */
+            footer {
+                padding: 1rem;
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .feature-icon {
+                font-size: 2rem;
+            }
+
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .subject-card {
+                padding: 1.2rem;
+            }
+
+            .quiz-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .welcome-content {
+                padding: 1.5rem;
+            }
+
+            .welcome-content h2 {
+                font-size: 1.3rem;
+            }
+
+            footer {
+                font-size: 0.75rem;
+                padding: 0.8rem;
             }
         }
     </style>
@@ -824,6 +1051,14 @@
             <button class="welcome-btn" onclick="closeWelcomeModal()">Let's Get Started!</button>
         </div>
     </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">
+        ☰
+    </button>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeSidebar()"></div>
 
     <div class="app-container">
         <!-- Sidebar -->
@@ -1205,35 +1440,7 @@
             welcomeShown = true;
         }
 
-        // Page navigation
-        function showPage(pageId) {
-            // Hide all pages
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
-            
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
-            
-            // Update nav links
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => link.classList.remove('active'));
-            
-            // Find and activate corresponding nav link
-            const activeLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
-            
-            // Update page title
-            const titles = {
-                'dashboard': 'Dashboard',
-                'reviewers': 'Subject Reviewers',
-                'flashcards': 'Smart Flashcards',
-                'quiz': 'Random Quiz',
-                'profile': 'Your Profile'
-            };
-            document.getElementById('pageTitle').textContent = titles[pageId] || 'EduVerse8';
-        }
+        // Page navigation (moved to mobile section with enhanced functionality)
 
         // User profile management
         function updateUserProfile() {
@@ -1522,8 +1729,54 @@
         // Mobile menu toggle (for responsive design)
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            
             sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        // Close sidebar when clicking nav links on mobile
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Find and activate corresponding nav link
+            const activeLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard',
+                'reviewers': 'Subject Reviewers',
+                'flashcards': 'Smart Flashcards',
+                'quiz': 'Random Quiz',
+                'profile': 'Your Profile'
+            };
+            document.getElementById('pageTitle').textContent = titles[pageId] || 'EduVerse8';
+            
+            // Close sidebar on mobile after navigation
+            if (window.innerWidth <= 768) {
+                closeSidebar();
+            }
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99461ffc457e02d6',t:'MTc2MTQ0MTU2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'994629c98540e2e4',t:'MTc2MTQ0MTk2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
